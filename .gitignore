@@ -21,8 +21,13 @@ yarn-error.log*
 # Puppeteer / Scraper temporary debug files
 **/debug-webkat-error.png
 **/debug-webkat-error.html
-*.png
-*.html
+
+# Databases & Runtime Storage
+**/*.sqlite
+**/*.sqlite3
+**/*.db
+**/invoices/
+**/base64.txt
 
 # IDEs & System files
 .DS_Store

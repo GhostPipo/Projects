@@ -1,0 +1,26 @@
+<div class="create-task-container">
+  <h3>Create Task</h3>
+  <div class="form-group">
+    <input type="text" [(ngModel)]="newTask.title" placeholder="Task eingeben...">
+    <select [(ngModel)]="newTask.day">
+      <option value="">Tag auswählen</option>
+      <option value="montag">Montag</option>
+      <option value="dienstag">Dienstag</option>
+      <option value="mittwoch">Mittwoch</option>
+      <option value="donnerstag">Donnerstag</option>
+      <option value="freitag">Freitag</option>
+      <option value="samstag">Samstag</option>
+      <option value="sonntag">Sonntag</option>
+    </select>
+    <input type="number" [(ngModel)]="newTask.duration" placeholder="Benötigte Zeit in min">
+    
+    <div class="priority-selector">
+      <p>Choose the priority</p>
+      <button class="btn-green" [class.active]="newTask.priority === 'low'" (click)="setPriority('low')"></button>
+      <button class="btn-orange" [class.active]="newTask.priority === 'medium'" (click)="setPriority('medium')"></button>
+      <button class="btn-red" [class.active]="newTask.priority === 'high'" (click)="setPriority('high')"></button>
+    </div>
+
+    <button class="save-btn" (click)="saveTask()">Save</button>
+  </div>
+</div>

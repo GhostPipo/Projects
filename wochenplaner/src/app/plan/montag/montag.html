@@ -1,0 +1,15 @@
+<div class="day-container">
+  <h2>Montag</h2>
+  <div class="tasks-list">
+    <div *ngFor="let task of tasks" class="task-item" [class.done]="task.isDone">
+      <div class="task-content">
+        <h3 [class.low]="task.priority === 'low'" [class.medium]="task.priority === 'medium'" [class.high]="task.priority === 'high'">{{ task.title }}</h3>
+        <p>Dauer: {{ task.duration }} min</p>
+        <p>Priorität: {{ task.priority }}</p>
+        <p *ngIf="task.yodaText">Yoda: {{ task.yodaText }}</p>
+      </div>
+      <button *ngIf="!task.isDone" (click)="completeTask(task.id)">Erledigen</button>
+    </div>
+    <p *ngIf="tasks.length === 0">Keine Tasks für Montag.</p>
+  </div>
+</div>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Margen-Rechner</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts for modern typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="dark-mode"> <!-- Standardmäßig Dark-Mode -->
+    
+    <!-- LOGIN SCREEN -->
+    <div id="loginScreen" class="login-container">
+        <div class="card login-card">
+            <h2>🔒 Login</h2>
+            <form id="loginForm">
+                <input type="password" id="loginPassword" class="input-field" placeholder="Passwort eingeben..." required>
+                <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Einloggen</button>
+            </form>
+            <p id="loginError" style="color: var(--danger); margin-top: 1rem; display: none;">Falsches Passwort!</p>
+        </div>
+    </div>
+
+    <div id="appScreen" class="app-container" style="display: none;">
+        <!-- Header -->
+        <header class="header">
+            <h1>⚙️ Margen-Rechner</h1>
+            <button id="themeToggle" class="icon-btn" aria-label="Theme umschalten">☀️</button>
+        </header>
+
+        <!-- Sheet Management -->
+        <section class="card sheet-management">
+            <div class="sheet-select-wrapper">
+                <label for="sheetSelect" class="sr-only">Aktuelles Sheet</label>
+                <select id="sheetSelect" class="input-field">
+                    <option value="1">Kunde Müller (heute)</option>
+                    <option value="2">Kunde Schmidt (gestern)</option>
+                </select>
+            </div>
+            <div class="sheet-actions">
+                <button class="btn btn-outline" id="newSheetBtn">➕ Neues Sheet</button>
+                <button class="btn btn-danger" id="deleteSheetBtn">🗑️ Löschen</button>
+            </div>
+        </section>
+
+        <!-- Add Part Form -->
+        <section class="card add-part">
+            <h2>➕ Teil hinzufügen</h2>
+            <form id="addPartForm" class="add-form">
+                <div class="form-group">
+                    <label for="partName">Bezeichnung</label>
+                    <input type="text" id="partName" class="input-field" placeholder="z.B. Bremsscheiben vorn" tabindex="1" required>
+                </div>
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label for="partEV">Einkauf (EV) €</label>
+                        <input type="number" id="partEV" class="input-field" placeholder="0.00" step="0.01" tabindex="2" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="partUVP">Verkauf (UVP) €</label>
+                        <input type="number" id="partUVP" class="input-field" placeholder="0.00" step="0.01" tabindex="3" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" tabindex="4">Hinzufügen</button>
+            </form>
+        </section>
+
+        <!-- Parts List -->
+        <section class="card parts-list-section">
+            <div class="list-header">
+                <h2>📋 Teileliste</h2>
+                <span id="currentSheetName" class="badge">Kunde Müller</span>
+            </div>
+            <div id="partsContainer" class="parts-container">
+                <!-- Wird dynamisch von app.js befüllt -->
+            </div>
+        </section>
+
+        <!-- Customer Ready Section -->
+        <section class="card customer-ready-section">
+            <div class="form-group" style="margin-bottom: 0;">
+                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                    <input type="checkbox" id="customerReadyCheck" style="width: 1.2rem; height: 1.2rem;">
+                    <strong>Kunde fertig bearbeitet</strong>
+                </label>
+            </div>
+            <div id="customerActionDetails" style="display: none; margin-top: 1rem;">
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label for="customerDiscount">Rabatt (%)</label>
+                        <input type="number" id="customerDiscount" class="input-field" placeholder="0" min="0" max="100">
+                    </div>
+                    <div class="form-group" style="display: flex; align-items: flex-end;">
+                        <button id="customerSummaryBtn" class="btn btn-primary" style="width: 100%;">Kunden-Zusammenfassung</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary (Sticky Bottom) -->
+        <section class="summary-section">
+            <div class="summary-row">
+                <span>Gesamt Einkauf (EV):</span>
+                <span id="totalEV">0,00 €</span>
+            </div>
+            <div class="summary-row">
+                <span>Gesamt Verkauf (UVP):</span>
+                <span id="totalUVP">0,00 €</span>
+            </div>
+            <hr class="summary-divider">
+            <div class="summary-row highlight">
+                <span>REINGEWINN:</span>
+                <span id="totalProfit">+ 0,00 €</span>
+            </div>
+            <div class="summary-row highlight">
+                <span>MARGE:</span>
+                <span id="profitMargin">+ 0.0 %</span>
+            </div>
+        </section>
+    </div>
+
+    <!-- Phase 3: Customer Summary Modal -->
+    <div id="summaryModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content card">
+            <div class="list-header" style="margin-bottom: 0;">
+                <h2>📋 Kunden-Angebot</h2>
+                <button id="closeModalBtn" class="icon-btn" aria-label="Schließen">❌</button>
+            </div>
+            <hr class="summary-divider">
+            <div id="modalPartsList" class="parts-container" style="max-height: 40vh; margin-bottom: 1rem;">
+                <!-- Wird dynamisch mit UVP (OHNE EV) gefüllt -->
+            </div>
+            <div class="summary-section" style="margin-top: 0; padding: 1rem;">
+                <div class="summary-row highlight" style="align-items: flex-end;">
+                    <span>Gesamtbetrag:</span>
+                    <div style="display: flex; flex-direction: column; align-items: flex-end;">
+                        <!-- Originalpreis (Rot & Durchgestrichen) -->
+                        <span id="modalOriginalTotal" style="color: var(--danger); text-decoration: line-through; font-size: 0.9rem; display: none;">0,00 €</span>
+                        <!-- Neuer Preis (Grün) -->
+                        <span id="modalFinalTotal" style="color: var(--success); background-color: var(--success-bg); padding: 0.2rem 0.5rem; border-radius: 0.25rem;">0,00 €</span>
+                        <!-- Rabatt Badge -->
+                        <span id="modalDiscountBadge" class="badge" style="margin-top: 0.4rem; background-color: var(--primary); color: white; display: none;"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group-row" style="margin-top: 1rem; margin-bottom: 0;">
+                <button id="copyWhatsAppBtn" class="btn btn-primary">Für WhatsApp kopieren</button>
+                <button id="openInvoiceModalBtn" class="btn btn-outline" style="margin-top: 0.5rem;">Rechnung erstellen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Phase 4: Invoice Form Modal -->
+    <div id="invoiceModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content card">
+            <div class="list-header" style="margin-bottom: 0;">
+                <h2>📄 Rechnungs-Details</h2>
+                <button id="closeInvoiceModalBtn" class="icon-btn" aria-label="Schließen">❌</button>
+            </div>
+            <hr class="summary-divider">
+            <form id="invoiceForm">
+                <div class="form-group">
+                    <label for="invCustomerName">Kundenname / Firma</label>
+                    <input type="text" id="invCustomerName" class="input-field" required>
+                </div>
+                <div class="form-group">
+                    <label for="invStreet">Straße & Hausnummer</label>
+                    <input type="text" id="invStreet" class="input-field" required>
+                </div>
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label for="invZip">PLZ</label>
+                        <input type="text" id="invZip" class="input-field" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="invCity">Ort</label>
+                        <input type="text" id="invCity" class="input-field" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="invUID">Kunden-UID (optional)</label>
+                    <input type="text" id="invUID" class="input-field">
+                </div>
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label for="invInvoiceNumber">Rechnungs-Nr.</label>
+                        <input type="text" id="invInvoiceNumber" class="input-field" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="invCustomerNumber">Kunden-Nr.</label>
+                        <input type="text" id="invCustomerNumber" class="input-field" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="invDate">Datum</label>
+                    <input type="date" id="invDate" class="input-field" required>
+                </div>
+                <div class="form-group">
+                    <label for="invSubject">Betreff & Leistungszeitraum</label>
+                    <input type="text" id="invSubject" class="input-field" placeholder="z.B. Ersatzteile VW Golf / Sammelrechnung Juni" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">PDF Generieren</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- jsPDF & jsPDF-AutoTable & QRious -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <script src="logoBase64.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

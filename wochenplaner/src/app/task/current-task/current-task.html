@@ -1,0 +1,23 @@
+<div class="current-tasks-container">
+  <h3>Current Tasks</h3>
+  
+  <div class="task-list">
+    @for (task of tasks$ | async; track task.id) {
+      <div class="task-item">
+        <span [class.done]="task.isDone" [class.low]="task.priority === 'low'" [class.medium]="task.priority === 'medium'" [class.high]="task.priority === 'high'">
+          {{ task.isDone && task.yodaText ? task.yodaText : task.title }}
+        </span>
+
+        <button (click)="toggleTask(task.id)" class="toggle-btn">{{ task.isDone ? 'Rückgängig' : 'Erledigen' }}</button>
+      </div>
+    }
+  </div>
+
+  <button (click)="onClear()" class="clear-btn">CLEAR</button>
+</div>
+
+<div class="motivation-section">
+  <h4>Motivationsspruch</h4>
+  <p>{{ currentQuote }}</p>
+  <button (click)="loadQuote()" class="quote-btn">Neuer Spruch</button>
+</div>

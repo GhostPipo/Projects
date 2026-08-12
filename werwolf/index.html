@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WERWOLF - Das Spiel</title>
+    <link rel="stylesheet" href="css/style1.css">
+</head>
+<body>
+
+    <div class="container">
+        <div id="toast-container" class="toast-container"></div>
+        
+        <div id="auth-gate" class="screen active">
+            <h1>WERWOLF</h1>
+            <h2>Login / Registrierung</h2>
+            <input type="text" id="auth-username" placeholder="Benutzername">
+            <input type="password" id="auth-password" placeholder="Passwort">
+            <button onclick="registerUser()">Registrieren</button>
+            <button onclick="loginUser()">Einloggen</button>
+        </div>
+        
+        <div id="game-app" style="display:none;">
+        <button id="btn-logout" class="btn-secondary" onclick="logoutUser()">Logout</button>
+        
+        <div id="screen-start" class="screen active">
+            <h1>WERWOLF</h1>
+            <p>Eingeloggt als: <strong id="current-user-label">...</strong></p>
+            <button onclick="showScreen('screen-host')">Spiel erstellen</button>
+            <button onclick="showScreen('screen-join')">Spiel beitreten</button>
+        </div>
+
+        <div id="screen-host" class="screen">
+            <h2>Einstellungen</h2>
+            <label>Wölfe Anzahl: <input type="number" id="set-wolves" value="1" min="1"></label>
+            <label>Max Spieler im Raum: <input type="number" id="set-max-players" value="8" min="3" max="20"></label>
+            <label>Nacht-Timer (Sek.): <input type="number" id="set-night-timer" value="30" min="5" max="600"></label>
+            <label>Tag-Timer (Sek.): <input type="number" id="set-day-timer" value="60" min="5" max="1200"></label>
+            <label class="checkbox-row"><input type="checkbox" id="set-with-hunter" checked> Mit Jäger spielen</label>
+            <p class="hint-warning">Empfohlen ab 7+ Spielern, da die Runde sonst sehr schnell zu Ende sein kann.</p>
+            <button onclick="hostGame()">Lobby erstellen</button>
+            <button class="btn-secondary" onclick="showScreen('screen-start')">Zurück</button>
+        </div>
+
+        <div id="screen-join" class="screen">
+            <h2>Beitreten</h2>
+            <input type="text" id="join-code" placeholder="Raum Code (z.B. A5X9)">
+            <p>Du trittst bei als: <strong id="join-user-label">...</strong></p>
+            <button onclick="joinGame()">Beitreten</button>
+            <button class="btn-secondary" onclick="showScreen('screen-start')">Zurück</button>
+        </div>
+
+        <div id="screen-lobby" class="screen">
+            <h2 id="lobby-code-display">CODE: ...</h2>
+            <p>Warte auf Host...</p>
+            <div id="player-list" class="list"></div>
+            <button id="btn-start-game" style="display:none;" onclick="startGame()">Spiel starten</button>
+        </div>
+
+        <div id="screen-game" class="screen">
+            <div class="top-bar">
+                <span id="my-username">...</span>
+                <span id="game-phase">Phase: ...</span>
+                <span id="game-timer"></span>
+                <span id="phase-icon" class="phase-icon">🌙</span>
+            </div>
+            
+            <div class="role-card">
+                <img id="my-role-img" src="" alt="Rolle">
+                <h3 id="my-role-name">Deine Rolle</h3>
+            </div>
+
+            <div id="action-area">
+                <p id="action-text">Warte auf andere...</p>
+            </div>
+
+            <div id="game-players" class="grid-list">
+                </div>
+                
+            <button id="btn-next-phase" style="display:none;" onclick="nextPhaseManual()">➡️ Nächste Phase</button>
+        </div>
+        <div id="screen-gameover" class="screen">
+            <h2 id="gameover-title">Spiel Ende</h2>
+            <p id="gameover-text">Gewinner: ...</p>
+            <button onclick="location.reload()">Zurück zur Lobby</button>
+        </div>
+
+        <div id="seer-modal" class="modal-overlay" style="display:none;">
+            <div class="modal-card">
+                <h2>🔮 Seherin</h2>
+                <p id="seer-result">Seherin: Ergebnis...</p>
+                <button onclick="closeSeerModal()">OK</button>
+            </div>
+        </div>
+        <div id="witch-modal" class="modal-overlay" style="display:none;">
+            <div class="modal-card">
+                <h2>🧪 Hexe</h2>
+                <p id="witch-text">Die Wölfe haben jemanden gewählt.</p>
+                <button id="witch-heal-btn" class="btn-primary">💚 HEILEN</button>
+                <button id="witch-poison-btn" class="btn-secondary">💀 VERGIFTEN</button>
+                <button onclick="commitWitchActions()" class="btn-success">✅ FERTIG</button>
+            </div>
+        </div>
+
+        <div id="voting-modal" class="modal-overlay voting-modal" style="display:none;">
+            <div class="modal-card voting-card">
+                <h2>🗳️ ABSTIMMUNG</h2>
+                <p>Wähle eine Person zum Eliminieren!</p>
+                <div id="voting-players" class="voting-grid"></div>
+                <button id="voting-confirm-btn" style="display:none;" class="btn-primary" onclick="confirmVote()">✅ VOTE BESTÄTIGEN</button>
+            </div>
+        </div>
+
+        <div id="wolf-modal" class="modal-overlay voting-modal" style="display:none;">
+            <div class="modal-card voting-card">
+                <h2>🐺 WÖLFE JAGEN</h2>
+                <p>Wähle euer Opfer!</p>
+                <div id="wolf-players" class="voting-grid"></div>
+                <button id="wolf-finish-btn" style="display:none;" class="btn-primary" onclick="confirmWolfVote()">✅ FERTIG MIT AUSWAHL DES OPFERS</button>
+            </div>
+        </div>
+
+        <template id="tpl-lobby-player">
+            <div class="player-item"></div>
+        </template>
+
+        <template id="tpl-player-card">
+            <div class="player-card" data-player-id="">
+                <h4 class="player-name"></h4>
+            </div>
+        </template>
+
+        <template id="tpl-poison-modal">
+            <div id="witch-poison-modal" class="modal-overlay voting-modal" style="display:none;">
+                <div class="modal-card voting-card">
+                    <h2>💀 GIFT-TRANK</h2>
+                    <p>Wähle dein Giftopfer!</p>
+                    <div id="poison-players" class="voting-grid"></div>
+                    <button id="poison-confirm-btn" style="display:none;" class="btn-primary">✅ VERGIFTEN</button>
+                    <button id="poison-cancel-btn" class="btn-secondary">Abbrechen</button>
+                </div>
+            </div>
+        </template>
+
+        <template id="tpl-death-overlay">
+            <div id="death-overlay">
+                <div id="death-overlay-content">
+                    <div id="death-overlay-icon">💀</div>
+                    <div id="death-overlay-title">DU BIST TOT</div>
+                    <div id="death-overlay-subtitle">Du scheidest aus dem Spiel aus</div>
+                    <div id="death-roles"></div>
+                    <div id="death-overlay-footer">Du kannst weiter zuschauen und schreiben<br>Das Spiel werden fortsetzt ohne dich</div>
+                </div>
+            </div>
+        </template>
+
+        <template id="tpl-death-role-row">
+            <div class="death-role-row"></div>
+        </template>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
