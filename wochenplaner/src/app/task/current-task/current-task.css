@@ -1,0 +1,133 @@
+.current-tasks-container {
+  margin-bottom: 30px;
+}
+
+.current-tasks-container h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 1.5em;
+}
+
+.task-list {
+  margin-bottom: 20px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  margin-bottom: 10px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.task-item:hover {
+  background: #f0f0f0;
+  transform: translateX(5px);
+}
+
+.task-item input[type="checkbox"] {
+  margin-right: 15px;
+  transform: scale(1.2);
+}
+
+.task-item span {
+  flex: 1;
+  font-size: 1em;
+  color: #333;
+}
+
+.task-item span.done {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.task-item span.low {
+  color: #f44336; /* Rot für low */
+}
+
+.task-item span.medium {
+  color: #ff9800; /* Orange für medium */
+}
+
+.task-item span.high {
+  color: #4caf50; /* Grün für high */
+}
+
+.task-item span.done.low,
+.task-item span.done.medium,
+.task-item span.done.high {
+  color: #888; /* Done überschreibt Prioritätsfarbe */
+}
+
+.toggle-btn {
+  padding: 8px 12px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  margin-left: auto;
+}
+
+.toggle-btn:hover {
+  background: #0056b3;
+}
+
+.clear-btn {
+  width: 100%;
+  padding: 12px;
+  background: #f44336;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.clear-btn:hover {
+  background: #d32f2f;
+  transform: translateY(-2px);
+}
+
+.motivation-section {
+  text-align: center;
+  background: #fff3cd;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.motivation-section h4 {
+  margin: 0 0 15px 0;
+  color: #856404;
+  font-size: 1.2em;
+}
+
+.motivation-section p {
+  margin: 0 0 15px 0;
+  font-style: italic;
+  color: #333;
+  font-size: 1.1em;
+}
+
+.quote-btn {
+  padding: 10px 20px;
+  background: #ffc107;
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.quote-btn:hover {
+  background: #ffb300;
+  transform: translateY(-2px);
+}

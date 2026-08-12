@@ -1,0 +1,14 @@
+# System files
+.DS_Store
+Thumbs.db
+*.zip
+
+# Node & Build artifacts for all sub-projects
+**/node_modules/
+**/dist/
+**/.angular/
+**/out-tsc/
+**/coverage/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

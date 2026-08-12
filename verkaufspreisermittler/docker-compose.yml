@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - PORTAL_USER=${PORTAL_USER}
+      - PORTAL_PASS=${PORTAL_PASS}
+    volumes:
+      - ./backend/src:/usr/src/app/src
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    restart: unless-stopped

@@ -1,0 +1,35 @@
+# Environment variables & secrets (CRITICAL SECURITY PROTECTION)
+**/.env
+**/.env.*
+!**/.env.example
+
+# Node.js dependencies across all subprojects
+**/node_modules/
+
+# Build artifacts & compiled code
+**/dist/
+**/.angular/
+**/out-tsc/
+**/coverage/
+
+# Logs & temporary files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Puppeteer / Scraper temporary debug files
+**/debug-webkat-error.png
+**/debug-webkat-error.html
+*.png
+*.html
+
+# IDEs & System files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json

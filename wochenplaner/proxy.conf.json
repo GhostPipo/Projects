@@ -1,0 +1,18 @@
+{
+  "/api/*": {
+    "target": "https://api.funtranslations.com",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  },
+  "/quote/*": {
+    "target": "https://api.quotable.io",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/quote": ""
+    }
+  }
+}

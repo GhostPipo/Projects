@@ -1,0 +1,35 @@
+WOlf Logik
+
+Funktionen der Rollen:
+
+Werwolf:
+- Kann jede Nacht zusammen mit den anderen Wölfen eine Person wählen die sie eliminieren wollen (Alle wölfe können jeweils eine Person markieren und die anderen wölfe sehen wenn sie markieren und sie haben 20 sekundne zeit um ihre Person einzuloggen, die Mehrheit gewinnt wenn es unentschieden ist dann wird eine Person zufällig gwwählt die Wölfe können nicht gewählt werden.)
+
+Armor:
+- ONLY in der 1. Nacht: Er kann 1 mal 2 perosnen auswählen, die er verkuppelt, wenn eine Person eliminiert wird (von den wölfen oder rausgewählt) dann stirbt der andere verkuppelte auch. die verkuppelten werden benachrichtigt mit wem sie verkuppelt sind
+Seherin:
+- Zu beginn jeder Runde kann die Seherin sich eine Karte von einer anderen Person anschauen, wnen sie stirbt oder rausgewählt wird nicht mehr
+Hexe:
+- DIe Hexe hat 2 tränke, der eine kann eine Person heilen falls sie von den wölfn ausgewählt wurde, also wenn die wölfe dann eine Person gewählt haben zum eliminieren dann wird die hexe benachrichtig wer ausgewählt wurde und kann sie heilen , aber diesen trank hat sie nur einmal. Sie hat aber auch einen anderen trank und zwar einen trank der jemanden elimieniren kann.Sie kann jede runde in der nacht wählen ob sie ihn benutzen will und jemanden auswühen, sie muss aber nicht, sie kann sich auch selbst heilen mit ihrem trank. sie kann beide tränke nur einmal benutzen und beide gleichzeitig verwenden
+- Jäger:
+Der jäger ist ein normaler Dorfbewohner aber wnen er stirbt oder rausgewählt wird dann kann er eine Person auswählen die auch stirbt.
+Dorfbewohner:
+- Keine speziellen Fähigkeiten.
+
+Matchablauf:
+Alle schlafen ein und die nacht erbricht.
+in der 1.Nacht wacht in der reihen folge die rollen auf:
+1. Armor (er verkuppelt 2)
+2. Seherin (Sie schaut sich eine Karte an)
+3. Die Wölfe wachen auf (sie wählen wen sie töten wollen)
+4. Die Hexe wacht auf (SIe entscheidet ob sie die Person retten will oder noch jemanden töten will)
+5. Alle wachen auf (Der Erzähler benachrichtigt was alle sin der nacht passiert ist, man sagt wer gestorben ist und falls die hexe geheilt hat sagt man zwar dass jemanand gestorben wäre aber e von der hexe gehielt wurde, aber keine namen sagen, alle rollen der spieler sind geheim)
+6. DER TAG und ABSTIMMUNG: Wenn der Tag anbricht, wird ein Timer von 2 Minuten gestartet. Nach 2 Minuten oder wenn der Host weiter drückt, müssen alle eine Person abstimmen, die rausgevotet wird. Die Person mit den meisten Stimmen wird eliminiert.
+7. Alle Schlafen und die nacht bricht ein (ALles wird wiederholt +-)
+
+AB dem 2. Tag wiederholt sich immer alles jede nacht
+
+WINNING CONDITIONS:
+
+Wölfe gewinnen: Wenn die Anzahl der Wölfe gleich der Anzahl der Bewohner ist (Bewohner = alle nicht-Wölfe, einschliesslich aller Rollen)
+Bewohner gewinnen: Wenn es keine Wölfe mehr gibt (alle Wölfe wurden eliminiert)

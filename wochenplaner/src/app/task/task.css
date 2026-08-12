@@ -1,0 +1,30 @@
+.task-page-wrapper {
+  display: flex;
+  gap: 30px;
+  padding: 20px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  box-sizing: border-box;
+}
+
+.left-side, .right-side {
+  flex: 1;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: transform 0.2s ease;
+}
+
+.left-side:hover, .right-side:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+  .task-page-wrapper {
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+  }
+}

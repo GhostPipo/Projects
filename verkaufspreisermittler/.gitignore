@@ -1,0 +1,40 @@
+# Environment variables (SECURITY ALERT: NEVER commit secrets)
+.env
+.env.local
+.env.*.local
+*.env
+
+# Dependency directories
+node_modules/
+**/node_modules/
+
+# Build and Angular output
+/dist
+/tmp
+/out-tsc
+/.angular
+/.angular/cache
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Puppeteer / Scraper debug artifacts
+debug-webkat-error.png
+debug-webkat-error.html
+backend/src/debug-webkat-error.png
+backend/src/debug-webkat-error.html
+*.png
+*.html
+
+# IDEs and OS metadata
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json

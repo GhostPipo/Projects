@@ -1,0 +1,22 @@
+.day-container {
+  background-color: #e3f2fd; /* Hellblau für Montag */
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.task-content h3.low {
+  color: #f44336; /* Rot für low */
+}
+
+.task-content h3.medium {
+  color: #ff9800; /* Orange für medium */
+}
+
+.task-content h3.high {
+  color: #4caf50; /* Grün für high */
+}
+
+.task-content h3.done {
+  text-decoration: line-through;
+  color: #888 !important;
+}
